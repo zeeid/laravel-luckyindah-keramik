@@ -11,8 +11,9 @@
 
         <div class="flex gap-4 mb-8 print:hidden">
             <button onclick="window.print()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">🖨️ Print MVC</button>
-            <a href="{{ route('export.excel') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📊 Export Excel</a>
-            <a href="https://wa.me/6281287765396" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">📱 Kirim ke WA</a>
+            <a href="{{ route('export.excel') }}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Export Excel</a>
+            <a href="https://wa.me/6281287765396" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Kirim ke WA</a>
+            <a href="/mahasiswa" target="_blank" rel="noopener noreferrer" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Data Master</a>
         </div>
         <h2 class="text-xl font-bold mb-4 border-b-2 border-blue-500 inline-block">Laporan Nilai Mahasiswa Per Jurusan</h2>
         <div class="overflow-x-auto mb-10">
