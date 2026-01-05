@@ -4,7 +4,9 @@ Aplikasi manajemen data akademik sederhana yang dibangun menggunakan **Laravel**
 
 # Demo Online
 https://luckyindahkeramik.jundi.hm
-
+```bash
+Program ini akan dihapus dari server jundi.hm setelah selesai proses recruitment
+```
 ## 🚀 Fitur Utama
 
 * **CRUD Mahasiswa:** Manajemen data mahasiswa dengan validasi lengkap.
