@@ -29,7 +29,13 @@ class MataKuliahController extends Controller
     }
 
     public function update(Request $request, $id) {
-        MataKuliah::findOrFail($id)->update($request->all());
+        $validated = $request->validate([
+            'nama_mata_kuliah' => 'required',
+            'dosen' => 'required',
+            'jurusan' => 'required',
+            // 'kode_mata_kuliah' tidak perlu divalidasi/diupdate jika readonly
+        ]);
+        MataKuliah::findOrFail($id)->update($validated);
         return redirect()->route('matakuliah.index')->with('success', 'Mata Kuliah diupdate');
     }
 
