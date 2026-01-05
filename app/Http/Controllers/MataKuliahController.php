@@ -18,8 +18,18 @@ class MataKuliahController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate(['kode_mata_kuliah' => 'required|unique:mata_kuliahs', 'nama_mata_kuliah' => 'required']);
-        MataKuliah::create($request->all());
+        $validated = $request->validate([
+            'kode_mata_kuliah' => 'required|unique:mata_kuliahs|max:10',
+            'nama_mata_kuliah' => 'required|string|max:100',
+            'dosen' => 'required|string|max:100',
+            'jurusan' => 'required',
+        ]);
+
+        $validated['kode_mata_kuliah'] = strip_tags($request->kode_mata_kuliah);
+        $validated['nama_mata_kuliah'] = strip_tags($request->nama_mata_kuliah);
+        $validated['dosen'] = strip_tags($request->dosen);
+
+        MataKuliah::create($validated);
         return redirect()->route('matakuliah.index')->with('success', 'Mata Kuliah ditambahkan');
     }
 
@@ -30,11 +40,14 @@ class MataKuliahController extends Controller
 
     public function update(Request $request, $id) {
         $validated = $request->validate([
-            'nama_mata_kuliah' => 'required',
-            'dosen' => 'required',
+            'nama_mata_kuliah' => 'required|string|max:100',
+            'dosen' => 'required|string|max:100',
             'jurusan' => 'required',
-            // 'kode_mata_kuliah' tidak perlu divalidasi/diupdate jika readonly
         ]);
+
+        $validated['nama_mata_kuliah'] = strip_tags($request->nama_mata_kuliah);
+        $validated['dosen'] = strip_tags($request->dosen);
+
         MataKuliah::findOrFail($id)->update($validated);
         return redirect()->route('matakuliah.index')->with('success', 'Mata Kuliah diupdate');
     }
