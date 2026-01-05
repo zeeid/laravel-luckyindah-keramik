@@ -14,7 +14,7 @@ class MataKuliahController extends Controller
     }
 
     public function create() {
-        return view('matakuliah.create');
+        return view('matakuliah.form');
     }
 
     public function store(Request $request) {
@@ -25,7 +25,7 @@ class MataKuliahController extends Controller
 
     public function edit($id) {
         $matakuliah = MataKuliah::findOrFail($id);
-        return view('matakuliah.edit', compact('matakuliah'));
+        return view('matakuliah.form', compact('matakuliah'));
     }
 
     public function update(Request $request, $id) {
