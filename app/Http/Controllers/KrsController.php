@@ -18,31 +18,45 @@ class KrsController extends Controller
     public function create() {
         $mahasiswa = Mahasiswa::all();
         $matakuliah = MataKuliah::all();
-        return view('krs.create', compact('mahasiswa', 'matakuliah'));
+        return view('krs.form', compact('mahasiswa', 'matakuliah'));
     }
 
     public function store(Request $request) {
-        // Validasi agar tidak duplikat
-        $cek = Krs::where('m_id', $request->m_id)
-                  ->where('kode_mata_kuliah', $request->kode_mata_kuliah)
-                  ->exists();
-                  
-        if($cek) return back()->withErrors(['msg' => 'Data KRS ini sudah ada!']);
+        $request->validate([
+            'm_id' => 'required',
+            'kode_mata_kuliah' => 'required',
+            'sks' => 'required|integer|min:1'
+        ]);
+
+        // Cek duplikasi Primary Key
+        $exists = Krs::where('m_id', $request->m_id)
+                     ->where('kode_mata_kuliah', $request->kode_mata_kuliah)
+                     ->exists();
+                     
+        if($exists) {
+            return back()->withErrors(['msg' => 'Mahasiswa ini sudah mengambil mata kuliah tersebut!']);
+        }
 
         Krs::create($request->all());
         return redirect()->route('krs.index')->with('success', 'KRS Berhasil Diambil');
     }
 
-    // UPDATE: Update SKS saja, karena PK (M# dan Kode MK) tidak lazim diubah di tabel pivot
     public function edit($m_id, $kode_mk) {
+        // Cari data spesifik dengan 2 kunci
         $krs = Krs::where('m_id', $m_id)->where('kode_mata_kuliah', $kode_mk)->firstOrFail();
-        return view('krs.edit', compact('krs'));
+        $mahasiswa = Mahasiswa::all();
+        $matakuliah = MataKuliah::all();
+
+        return view('krs.form', compact('krs', 'mahasiswa', 'matakuliah'));
     }
 
     public function update(Request $request, $m_id, $kode_mk) {
-        Krs::where('m_id', $m_id)->where('kode_mata_kuliah', $kode_mk)
+        $request->validate(['sks' => 'required|integer|min:1']);
+
+        Krs::where('m_id', $m_id)
+           ->where('kode_mata_kuliah', $kode_mk)
            ->update(['sks' => $request->sks]);
-           
+
         return redirect()->route('krs.index')->with('success', 'SKS Berhasil Diupdate');
     }
 
