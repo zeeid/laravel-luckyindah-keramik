@@ -24,7 +24,7 @@ Program ini akan dihapus dari server jundi.hm setelah selesai proses recruitment
 
 ## 🛠️ Teknologi yang Digunakan
 
-* **Backend:** Laravel 11 (PHP 8.2+)
+* **Backend:** Laravel 12 (PHP 8.2+)
 * **Frontend:** Blade Templating + Tailwind CSS (CDN)
 * **Database:** MySQL
 * **Arsitektur:** MVC (Model-View-Controller)
