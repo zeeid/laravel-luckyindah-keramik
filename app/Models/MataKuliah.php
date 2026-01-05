@@ -10,6 +10,13 @@ class MataKuliah extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    protected $fillable = [
+        'kode_mata_kuliah',
+        'nama_mata_kuliah',
+        'dosen',
+        'jurusan'
+    ];
+
     // Relasi: Satu MK bisa diambil banyak Mahasiswa (Lewat tabel KRS)
     public function mahasiswas()
     {
