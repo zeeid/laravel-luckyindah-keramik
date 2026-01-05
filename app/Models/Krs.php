@@ -9,6 +9,7 @@ class Krs extends Model
     protected $table = 'krs';
     // Karena composite primary key, kita set incrementing false
     public $incrementing = false; 
+    protected $fillable = ['m_id', 'kode_mata_kuliah', 'sks'];
     
     // Relasi balik ke Mahasiswa
     public function mahasiswa()

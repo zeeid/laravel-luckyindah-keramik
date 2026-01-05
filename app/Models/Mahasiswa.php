@@ -10,6 +10,8 @@ class Mahasiswa extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    protected $fillable = ['m_id', 'nim', 'kode_jenis_kelamin', 'nama_mahasiswa', 'jurusan', 'ipk'];
+
     // Relasi ke Jenis Kelamin (Inverse)
     public function jenisKelamin()
     {
