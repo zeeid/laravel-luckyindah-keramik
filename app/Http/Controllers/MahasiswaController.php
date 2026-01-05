@@ -20,16 +20,20 @@ class MahasiswaController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate([
-            'm_id' => 'required|unique:mahasiswas|max:10',
+        $validated = $request->validate([
+            'm_id' => 'required|unique:mahasiswas|max:10|alpha_num', // alpha_num mencegah simbol aneh
             'nim' => 'required|unique:mahasiswas|max:20',
-            'nama_mahasiswa' => 'required',
+            'nama_mahasiswa' => 'required|string|max:100',
             'kode_jenis_kelamin' => 'required',
             'jurusan' => 'required',
             'ipk' => 'required|numeric|between:0,4.00',
         ]);
 
-        Mahasiswa::create($request->all());
+        $validated['nama_mahasiswa'] = strip_tags($request->nama_mahasiswa);
+        $validated['m_id'] = strip_tags($request->m_id);
+        $validated['nim'] = strip_tags($request->nim);
+
+        Mahasiswa::create($validated);
         return redirect()->route('mahasiswa.index')->with('success', 'Data Mahasiswa Berhasil Ditambahkan');
     }
 
@@ -40,16 +44,18 @@ class MahasiswaController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $request->validate([
-            // Ignore unique check untuk record ini
+        $validated = $request->validate([
             'nim' => 'required|max:20|unique:mahasiswas,nim,'.$id.',m_id',
-            'nama_mahasiswa' => 'required',
+            'nama_mahasiswa' => 'required|string|max:100',
             'kode_jenis_kelamin' => 'required',
             'jurusan' => 'required',
             'ipk' => 'required|numeric|between:0,4.00',
         ]);
 
-        Mahasiswa::findOrFail($id)->update($request->all());
+        $validated['nama_mahasiswa'] = strip_tags($request->nama_mahasiswa);
+        $validated['nim'] = strip_tags($request->nim);
+
+        Mahasiswa::findOrFail($id)->update($validated);
         return redirect()->route('mahasiswa.index')->with('success', 'Data Mahasiswa Berhasil Diupdate');
     }
 
